@@ -7,7 +7,10 @@ COPY ./requirements.txt /app/requirements.txt
 
 RUN pip install -r /app/requirements.txt
 
-COPY . /app
+COPY URL2Image /app/URL2Image
+COPY ./start.sh /app/
+COPY ./configs/gunicorn/gunicorn.conf.py /etc/
+COPY ./wsgi.py /app/
 
 WORKDIR /app
 
