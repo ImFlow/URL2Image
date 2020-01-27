@@ -13,5 +13,10 @@ def client():
     """
     Return a configured client for testing
     """
-    myclient = app(__name__)
-    yield myclient
+
+    testing_client = app.test_client()
+    ctx = app.app_context()
+    ctx.push()
+    yield testing_client
+    ctx.pop()
+
