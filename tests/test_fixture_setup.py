@@ -7,6 +7,7 @@ import pytest
 
 from url2_image.app import app
 
+
 @pytest.fixture
 def client():
     """
