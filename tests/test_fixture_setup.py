@@ -7,7 +7,6 @@ import pytest
 
 from url2_image.app import app
 
-
 @pytest.fixture
 def client():
     """
@@ -19,4 +18,3 @@ def client():
     ctx.push()
     yield testing_client
     ctx.pop()
-
