@@ -1,6 +1,8 @@
 """
 Test the "/" route of the app
 """
+# pylint: disable=redefined-outer-name
+# pylint: disable=unused-import
 
 from test_fixture_setup import client
 
