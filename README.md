@@ -38,4 +38,4 @@ More here later
 - [ ] Username/Password authentification?
 - [ ] Configs
 - [ ] Image format selection (jpg/png/heif?)
-- [ :white_check_mark: ] DDos protection
+- [:white_check_mark:] DDos protection
