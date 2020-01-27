@@ -12,4 +12,3 @@ def test_main(client):
     """
     result = client.get("/")
     assert b'Hello World' in result.data
-
