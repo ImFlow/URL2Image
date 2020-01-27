@@ -1,10 +1,16 @@
+"""
+Setup fixtures for the tests of the url2_image app.
+Since we are not using any DBs the setup is rather simple and (maybe) can omitted
+"""
+
 import pytest
 
-import pathlib
-
-from URL2Image.app import app
+from url2_image.app import app
 
 @pytest.fixture
 def client():
-    client = app(__name__)
-    yield client
+    """
+    Return a configured client for testing
+    """
+    myclient = app(__name__)
+    yield myclient
