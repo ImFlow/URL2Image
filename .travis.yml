@@ -1,11 +1,21 @@
 language: python
 
+services: 
+  - docker
+
 python:
+  - "3.7"
   - "3.8"
+
 
 before_install:
   - pip install -r requirements.txt
   - pip install pytest pytest-cov
+  - docker build -t imflow/url2image .
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push imflow/url2image
+  - docker run -d -p 5000:5000 imflow/url2image
 
 script: 
   - python -m pytest tests 
+  - curl localhost:5000
