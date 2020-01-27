@@ -10,12 +10,15 @@ python:
 
 before_install:
   - pip install -r requirements.txt
-  - pip install pytest pytest-cov
+  - pip install pytest pytest-cov python-coveralls
   - docker build -t imflow/url2image .
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker push imflow/url2image
+  #- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  #- docker push imflow/url2image
   - docker run -d -p 5000:5000 imflow/url2image
 
 script: 
-  - python -m pytest tests 
+  - python -m pytest tests --doctest-modules  -v --cov coveralls --cov-report term-missing
   - curl localhost:5000
+
+after_success:
+  - coveralls
