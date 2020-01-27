@@ -1,0 +1,6 @@
+[run]
+omit =
+  *configs/*,
+  *tests/*,
+  *wsgi.py*
+  *__init__.py*
