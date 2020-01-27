@@ -1,8 +1,6 @@
 """
 Test the "/" route of the app
 """
-import pytest
-
 from test_fixture_setup import client
 
 
