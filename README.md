@@ -1,6 +1,8 @@
 [![Build Status](https://travis-ci.org/ImFlow/URL2Image.svg?branch=master)](https://travis-ci.org/ImFlow/URL2Image)
 [![Coverage Status](https://coveralls.io/repos/github/ImFlow/URL2Image/badge.svg?branch=master)](https://coveralls.io/github/ImFlow/URL2Image?branch=master)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Documentation Status](https://readthedocs.org/projects/url2image/badge/?version=master)](https://url2image.readthedocs.io/en/master/?badge=master)
+
 # URL2Image
 A microservice that turns an URL into an image.
 This is at a very early development stage.
