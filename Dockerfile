@@ -12,8 +12,8 @@ COPY url2_image /app/url2_image
 COPY ./start.sh /app/
 COPY ./configs/gunicorn/gunicorn.conf.py /etc/
 COPY ./wsgi.py /app/
-COPY ./.git-commit /app/git-commit
-COPY ./.git-branch /app/git-branch
+COPY ./.git-commit /app/
+COPY ./.git-branch /app/
 
 WORKDIR /app
 EXPOSE 5000

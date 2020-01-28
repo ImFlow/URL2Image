@@ -3,6 +3,7 @@ Main file for the url2_image app
 """
 import sys
 import os
+import pathlib
 from flask import Flask, request, jsonify
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
@@ -12,13 +13,15 @@ app = Flask(__name__)
 
 VERSION = "v0.1"
 
-if os.environ["FLASK_DEBUG"] != "1":
-    limiter = Limiter(
-        app,
-        key_func=get_remote_address,
-        default_limits=["2 per minute", "1 per second"],
-    )
 
+limiter = Limiter(
+    app,
+    key_func=get_remote_address,
+    default_limits=["2 per minute", "1 per second"],
+)
+
+if os.environ.get("FLASK_DEBUG") is not None:
+    limiter.enabled = False
 
 @app.route("/")
 def hello():
@@ -37,14 +40,15 @@ def get_version():
     req_format = request.args.get("format")
     sha = ""
     branch = ""
-    with open("/app/git-commit") as f:
+    print(f"Path: {pathlib.Path().absolute()}")
+    with open(".git-commit") as f:
         for line in f:
             sha = line
 
-    with open("/app/git-branch") as f:
+    with open(".git-branch") as f:
         for line in f:
             branch = line
-    if req_format == "json": 
+    if req_format == "json":
         response = {}
         response['Version'] = VERSION
         response['Hash'] = sha
@@ -53,7 +57,7 @@ def get_version():
     elif req_format == None:
         return f'Version: {VERSION} - Git Hash: {sha} branch: {branch}'
     else:
-        return "Bad request", 400
+        return "Bad Request", 400
 
 
 if __name__ == "__main__":

@@ -5,7 +5,7 @@ Since we are not using any DBs the setup is rather simple and (maybe) can omitte
 
 import pytest
 
-from url2_image.app import app
+from url2_image.app import app, limiter
 
 
 @pytest.fixture
@@ -17,5 +17,6 @@ def client():
     testing_client = app.test_client()
     ctx = app.app_context()
     ctx.push()
+    limiter.enabled = False
     yield testing_client
     ctx.pop()
