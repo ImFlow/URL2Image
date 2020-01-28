@@ -9,6 +9,8 @@ python:
 
 
 before_install:
+  - apt update
+  - apt -y install enchant
   - pip install -r requirements.txt
   - pip install pytest pytest-cov coveralls pyenchant
   - docker build -t imflow/url2image .

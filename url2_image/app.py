@@ -49,7 +49,6 @@ def get_version():
         for line in f:
             branch = line
 
-
     if req_format == "json":
         response = {}
         response['Version'] = VERSION
