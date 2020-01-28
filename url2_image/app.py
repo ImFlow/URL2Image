@@ -10,6 +10,8 @@ import os
 # pylint: disable=invalid-name
 app = Flask(__name__)
 
+VERSION = "v0.1"
+
 if os.environ["FLASK_DEBUG"] != 1:
     limiter = Limiter(
         app,
@@ -33,8 +35,16 @@ def get_version():
 
     """
     format = request.args.get("format")
-    print(f"format: {format}", file=sys.stdout)
-    return f"format: {format}"
+    sha = ""
+    branch = ""
+    with open("/app/git-commit") as f: 
+        for line in f:
+            sha = line
+    
+    with open("/app/git-branch") as f: 
+        for line in f:
+            branch = line
+    return f'Version: {VERSION} - Git Hash: {sha} branch: {branch}'
 
 
 if __name__ == "__main__":
