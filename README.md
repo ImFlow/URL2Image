@@ -44,9 +44,11 @@ curl "localhost:5000/getImage?url=google.de&width=400&height=400" -o test.png
 
 ## TODO
 :white_check_mark: Design API
+
 :white_check_mark: Provide API endpoints
 - [ ] JWT authentification
 - [ ] Username/Password authentification?
 - [ ] Configs
 - [ ] Image format selection (jpg/png/heif?)
+
 :white_check_mark: DDos protection
