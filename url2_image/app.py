@@ -94,11 +94,10 @@ def get_image():
     req_width = 1920
     if request.args.get('width') is not None:
         req_width = int(request.args.get('width'))
-    
+
     req_height = 1080
     if request.args.get('height') is not None:
         req_height = int(request.args.get('height'))
-    
 
     chrome_options = Options()
     chrome_options.add_argument(f"--window-size={req_width},{req_height}")

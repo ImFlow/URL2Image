@@ -16,4 +16,4 @@ def test_get_image(client):
     assert b'Bad Request' in result.data
     result = client.get("/getImage?url=google.de")
     assert result.status_code == 200
-    assert "image" in result.Headers.get("Content-Type") 
+    assert "image" in result.Headers.get("Content-Type")
