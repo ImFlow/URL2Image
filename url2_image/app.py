@@ -5,14 +5,17 @@ from flask import Flask, request
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 import sys
+import os
 
 # pylint: disable=invalid-name
 app = Flask(__name__)
-limiter = Limiter(
-    app,
-    key_func=get_remote_address,
-    default_limits=["2 per minute", "1 per second"],
-)
+
+if os.environ["FLASK_DEBUG"] != 1:
+    limiter = Limiter(
+        app,
+        key_func=get_remote_address,
+        default_limits=["2 per minute", "1 per second"],
+    )
 
 
 @app.route("/")
@@ -22,6 +25,7 @@ def hello():
     """
     return "Hello World"
 
+
 @app.route("/version")
 def get_version():
     """
@@ -29,8 +33,8 @@ def get_version():
 
     """
     format = request.args.get("format")
-    print("format foo bar", file=sys.stdout)
-    return "format"
+    print(f"format: {format}", file=sys.stdout)
+    return f"format: {format}"
 
 
 if __name__ == "__main__":
