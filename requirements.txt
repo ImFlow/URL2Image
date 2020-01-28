@@ -2,3 +2,6 @@ Flask
 Flask-Limiter
 gunicorn
 pytest
+pytest-cov
+xvfbwrapper
+selenium

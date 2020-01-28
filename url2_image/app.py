@@ -74,6 +74,7 @@ def get_version():
         return f'Version: {VERSION} - Git Hash: {sha} branch: {branch}'
     return "Bad Request", 400
 
+
 @app.route("/getImage")
 def get_image():
     """
@@ -97,7 +98,8 @@ def get_image():
     browser.quit()
     with open(destination, "rb") as f:
         return send_file(io.BytesIO(f.read()), attachment_filename="url.png", mimetype="image/png")
-    
+
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
 # pylint: enable=invalid-name

@@ -9,10 +9,7 @@ python:
 
 
 before_install:
-  - sudo apt-get update
-  - sudo apt -y install enchant
-  - pip install -r requirements.txt
-  - pip install pytest pytest-cov coveralls pyenchant
+  - ./bootstrap-travis.sh
   - docker build -t imflow/url2image .
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker run -d -p 5000:5000 imflow/url2image
