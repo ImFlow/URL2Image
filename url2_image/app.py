@@ -1,18 +1,18 @@
 """
 Main file for the url2_image app
 """
-from flask import Flask, request
-from flask_limiter import Limiter
-from flask_limiter.util import get_remote_address
 import sys
 import os
+from flask import Flask, request, jsonify
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
 # pylint: disable=invalid-name
 app = Flask(__name__)
 
 VERSION = "v0.1"
 
-if os.environ["FLASK_DEBUG"] != 1:
+if os.environ["FLASK_DEBUG"] != "1":
     limiter = Limiter(
         app,
         key_func=get_remote_address,
@@ -34,17 +34,26 @@ def get_version():
     API endpoint to retrieve version information of the service. 
 
     """
-    format = request.args.get("format")
+    req_format = request.args.get("format")
     sha = ""
     branch = ""
-    with open("/app/git-commit") as f: 
+    with open("/app/git-commit") as f:
         for line in f:
             sha = line
-    
-    with open("/app/git-branch") as f: 
+
+    with open("/app/git-branch") as f:
         for line in f:
             branch = line
-    return f'Version: {VERSION} - Git Hash: {sha} branch: {branch}'
+    if req_format == "json": 
+        response = {}
+        response['Version'] = VERSION
+        response['Hash'] = sha
+        response['Branch'] = branch
+        return jsonify(response)
+    elif req_format == None:
+        return f'Version: {VERSION} - Git Hash: {sha} branch: {branch}'
+    else:
+        return "Bad request", 400
 
 
 if __name__ == "__main__":
