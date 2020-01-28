@@ -13,3 +13,4 @@ sudo mkdir /tmp_images
 
 pip install -r requirements.txt
 pip install pytest pytest-cov coveralls pyenchant
+ls -alsh
