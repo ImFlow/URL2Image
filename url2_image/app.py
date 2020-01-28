@@ -78,26 +78,49 @@ def get_version():
 @app.route("/getImage")
 def get_image():
     """
-    Main API endpoint
+    Main API endpoint. This takes in an URL and returns an image. 
+
+    Args: 
+        url (str): The URL of the target website to be downloaded. 
+        width (int): Width of the target image (default=1920)
+        height (int): Height of the target image (default=1080)
+    Returns: 
+        A bytestream containing the downloaded website as image
     """
+    req_url = request.args.get('url')
+    if req_url is None:
+        return "Bad Request", 400
+
+    req_width = 1920
+    if request.args.get('width') is not None:
+        req_width = int(request.args.get('width'))
+    
+    req_height = 1080
+    if request.args.get('height') is not None:
+        req_height = int(request.args.get('height'))
+    
+
     chrome_options = Options()
-    chrome_options.add_argument("--window-size=1920,1080")
+    chrome_options.add_argument(f"--window-size={req_width},{req_height}")
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument("--disable-gpu")
-    print("Request ", request)
-    d = Xvfb(width=1920, height=1080)
+
+    d = Xvfb(width=req_width, height=req_height)
     d.start()
     browser = webdriver.Chrome(chrome_options=chrome_options)
-    url = request.args.get('url')
-    print("URL:", url)
-    browser.get('https://' + url)
-    fname = hashlib.md5(url.encode('utf-8')).hexdigest()
+
+    browser.get('https://' + req_url)
+    fname = hashlib.md5(req_url.encode('utf-8')).hexdigest()
     destination = "/tmp_images/" + fname + ".png"
+
     if browser.save_screenshot(destination):
         print("File saved in the destination filename")
     browser.quit()
+
     with open(destination, "rb") as f:
         return send_file(io.BytesIO(f.read()), attachment_filename="url.png", mimetype="image/png")
+
+    return "Image download error", 500
 
 
 if __name__ == "__main__":
