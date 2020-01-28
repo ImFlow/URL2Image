@@ -2,8 +2,13 @@
 Main file for the url2_image app
 """
 import os
+import io
 import pathlib
-from flask import Flask, request, jsonify
+import hashlib
+from selenium.webdriver.chrome.options import Options
+from selenium import webdriver
+from xvfbwrapper import Xvfb
+from flask import Flask, request, jsonify, send_file
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
@@ -69,7 +74,30 @@ def get_version():
         return f'Version: {VERSION} - Git Hash: {sha} branch: {branch}'
     return "Bad Request", 400
 
-
+@app.route("/getImage")
+def get_image():
+    """
+    Main API endpoint
+    """
+    chrome_options = Options()
+    chrome_options.add_argument("--window-size=1920,1080")
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument("--disable-gpu")
+    print("Request ", request)
+    d = Xvfb(width=1920, height=1080)
+    d.start()
+    browser = webdriver.Chrome(chrome_options=chrome_options)
+    url = request.args.get('url')
+    print("URL:", url)
+    browser.get('https://' + url)
+    fname = hashlib.md5(url.encode('utf-8')).hexdigest()
+    destination = "/tmp_images/" + fname + ".png"
+    if browser.save_screenshot(destination):
+        print("File saved in the destination filename")
+    browser.quit()
+    with open(destination, "rb") as f:
+        return send_file(io.BytesIO(f.read()), attachment_filename="url.png", mimetype="image/png")
+    
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
 # pylint: enable=invalid-name
