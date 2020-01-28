@@ -6,7 +6,7 @@ cd /usr/bin
 sudo wget https://chromedriver.storage.googleapis.com/79.0.3945.36/chromedriver_linux64.zip
 sudo unzip chromedriver_linux64.zip
 sudo wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
-    && dpkg -i google-chrome*.deb; exit 0
+    && sudo dpkg -i google-chrome*.deb
 
 
 sudo mkdir /tmp_images
