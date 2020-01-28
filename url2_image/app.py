@@ -36,6 +36,16 @@ def get_version():
     """
     API endpoint to retrieve version information of the service.
 
+    Example: 
+        The Api endpoint can be queried as follows:: 
+
+            $ curl "localhost:5000/version"
+            $ curl "localhost:5000/version?format=json"
+
+    Args: 
+        format (str): (Optional) when format=json a json object is returned
+    Returns: 
+        Version information of the service either as plaintext or json. Information contains version number, git hash (one commit behind) and git branch.
     """
     req_format = request.args.get("format")
     sha = ""
