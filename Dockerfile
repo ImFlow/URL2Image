@@ -13,6 +13,6 @@ COPY ./configs/gunicorn/gunicorn.conf.py /etc/
 COPY ./wsgi.py /app/
 
 WORKDIR /app
-
+EXPOSE 5000
 CMD ["/app/start.sh"]
 

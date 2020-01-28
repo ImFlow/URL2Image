@@ -1,0 +1,13 @@
+version: '3.4'
+
+services: 
+  url2image:
+    build: .
+    restart: always
+    ports: 
+      - 5000:5000
+    volumes:
+      - ./url2_image:/app/url2_image
+    entrypoint: "python /app/url2_image/app.py"
+    environment:
+      FLASK_DEBUG: 1
