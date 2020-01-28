@@ -6,9 +6,10 @@ Submodules
 
 url2\_image.app module
 ----------------------
+.. autoflask:: url2_image.app:app
+   :undoc-static:
 
 .. automodule:: url2_image.app
-   :members:
    :undoc-members:
    :show-inheritance:
 
