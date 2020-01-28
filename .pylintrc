@@ -6,7 +6,7 @@ persistent=yes
 # Use multiple processes to speed up Pylint.
 jobs=4
 
-load-plugins=pylint_django
+
 ignore=docu, tests
 
 [MESSAGES CONTROL]
@@ -14,7 +14,7 @@ ignore=docu, tests
 # all. Valid levels: HIGH, INFERENCE, INFERENCE_FAILURE, UNDEFINED
 confidence=INFERENCE_FAILURE
 
-disable=C0103,C0301
+disable=C0103,C0301,R1705
 
 [REPORTS]
 

@@ -1,7 +1,6 @@
 """
 Main file for the url2_image app
 """
-import sys
 import os
 import pathlib
 from flask import Flask, request, jsonify
@@ -23,6 +22,7 @@ limiter = Limiter(
 if os.environ.get("FLASK_DEBUG") is not None:
     limiter.enabled = False
 
+
 @app.route("/")
 def hello():
     """
@@ -34,7 +34,7 @@ def hello():
 @app.route("/version")
 def get_version():
     """
-    API endpoint to retrieve version information of the service. 
+    API endpoint to retrieve version information of the service.
 
     """
     req_format = request.args.get("format")
@@ -48,6 +48,8 @@ def get_version():
     with open(".git-branch") as f:
         for line in f:
             branch = line
+
+
     if req_format == "json":
         response = {}
         response['Version'] = VERSION
@@ -56,8 +58,7 @@ def get_version():
         return jsonify(response)
     elif req_format == None:
         return f'Version: {VERSION} - Git Hash: {sha} branch: {branch}'
-    else:
-        return "Bad Request", 400
+    return "Bad Request", 400
 
 
 if __name__ == "__main__":
