@@ -10,6 +10,7 @@ sudo wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.
 
 
 sudo mkdir /tmp_images
+sudo chmod a+rwx /tmp_images
 
 pip install -r requirements.txt
 pip install pytest pytest-cov coveralls pyenchant
