@@ -88,3 +88,5 @@ The service can be configured using environtment variables:
 :white_check_mark: Configs
 
 :white_check_mark: Image format selection (jpg/png)
+
+- [ ] Add a standalone Program
