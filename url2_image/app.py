@@ -94,10 +94,15 @@ def get_image():
 
     Args: 
         url (str): The URL of the target website to be downloaded. 
+
         width (int): Width of the target image (default=1920)
+
         height (int): Height of the target image (default=1080)
+
         format (str): The format of the target image. Either png or jpg (default=png)
+
         quality (int): JPEG Quality from 0 to 100 (default=60)
+
     Returns: 
         A bytestream containing the downloaded website as image
     """
@@ -182,7 +187,7 @@ def login():
     The authorization is then done in the header::
 
         curl -H "Authorization: Bearer TOKEN" "http://localhost:5000/getImage?url=google.de"
-
+    
     Args:
 
         username: The username to login
