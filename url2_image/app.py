@@ -12,6 +12,9 @@ from flask import Flask, request, jsonify, send_file
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
+from PIL import Image
+
+
 from url2_image_env import JWT_SECRET_KEY, JWT_USER, JWT_PASSWORD, FLASK_DEBUG, USE_LOGIN, JWT_ACCESS_TOKEN_EXPIRES
 from login_util import conditional_decorator
 
@@ -93,6 +96,8 @@ def get_image():
         url (str): The URL of the target website to be downloaded. 
         width (int): Width of the target image (default=1920)
         height (int): Height of the target image (default=1080)
+        format (str): The format of the target image. Either png or jpg (default=png)
+        quality (int): JPEG Quality from 0 to 100 (default=60)
     Returns: 
         A bytestream containing the downloaded website as image
     """
@@ -125,6 +130,26 @@ def get_image():
         print("File saved in the destination filename")
     browser.quit()
 
+    req_format = "png"
+    if request.args.get('format') is not None: 
+        #never trust user input
+        wanted_format = request.args.get('format')
+        if 'jpg' in wanted_format: 
+            req_format = "jpg"
+
+    req_quality = 60
+    if request.args.get('quality') is not None:
+        req_quality = int(request.args.get('quality'))
+    
+
+    if req_format == "jpg": 
+        im = Image.open(destination)
+        rgb_im = im.convert('RGB')
+        destination = "/tmp_images/" + fname + ".jpg"
+        rgb_im.save(destination, quality=req_quality, optimize=True, progressive=True)
+        with open(destination, "rb") as f:
+            return send_file(io.BytesIO(f.read()), attachment_filename="url.jpg", mimetype="image/jpg")
+
     with open(destination, "rb") as f:
         return send_file(io.BytesIO(f.read()), attachment_filename="url.png", mimetype="image/png")
 
@@ -144,7 +169,7 @@ def login():
     - JWT_PASSWORD: The password for the JWT login. Default: url2image
 
     - USE_LOGIN: Enables/Disables the requirement for login via JWT. Default: True
-    
+
     - JWT_ACCESS_TOKEN_EXPIRES: The expiration time (in seconds) of `False` for no expiration of the JWT. Default: False 
 
     A basic login can be achieved via:: 

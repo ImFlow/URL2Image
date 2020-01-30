@@ -6,3 +6,4 @@ pytest-cov
 xvfbwrapper
 selenium
 flask-jwt-extended
+Pillow
