@@ -3,13 +3,15 @@ Setup fixtures for the tests of the url2_image app.
 Since we are not using any DBs the setup is rather simple and (maybe) can omitted
 """
 
+from url2_image.app import app, limiter
 import pytest
 
-import sys, os
+import sys
+import os
 myPath = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, myPath + '/../url2_image/')
-from url2_image.app import app, limiter
-
+myPath = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, myPath)
 
 @pytest.fixture
 def client():
