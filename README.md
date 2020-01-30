@@ -5,7 +5,6 @@
 
 # URL2Image
 A microservice that turns an URL into an image.
-This is a basic working version.
 
 ## What it is
 URL2Image provides an API, which accepts a URL and returns a rendered image of the URL.
