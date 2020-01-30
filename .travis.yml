@@ -10,9 +10,9 @@ python:
 
 before_install:
   - ./bootstrap-travis.sh
-  - docker build -t imflow/url2image .
+  #- docker build -t imflow/url2image .
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker run -d -p 5000:5000 imflow/url2image
+  #- docker run -d -p 5000:5000 imflow/url2image
   
 
 script: 
@@ -21,5 +21,5 @@ script:
 
 after_success:
   - coveralls
-  - docker push imflow/url2image
+  #- docker push imflow/url2image
   
