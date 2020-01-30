@@ -9,8 +9,6 @@ myPath = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, myPath + '/../url2_image/')
 
 
-
-
 @pytest.fixture
 def client():
     """
@@ -18,7 +16,7 @@ def client():
     """
 
     from url2_image.app import app, limiter
-    
+
     testing_client = app.test_client()
     ctx = app.app_context()
     ctx.push()
