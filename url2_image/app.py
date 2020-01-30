@@ -18,6 +18,7 @@ from login_util import conditional_decorator
 # pylint: disable=invalid-name
 app = Flask(__name__)
 app.config['JWT_SECRET_KEY'] = JWT_SECRET_KEY
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = JWT_ACCESS_TOKEN_EXPIRES
 jwt = JWTManager(app)
 
 VERSION = "v0.1"
@@ -43,7 +44,7 @@ def hello():
 
 
 @app.route("/version")
-@conditional_decorator(jwt_required, USE_LOGIN) 
+@conditional_decorator(jwt_required, USE_LOGIN)
 def get_version():
     """
     API endpoint to retrieve version information of the service.
@@ -83,7 +84,7 @@ def get_version():
 
 
 @app.route("/getImage")
-@conditional_decorator(jwt_required, USE_LOGIN) 
+@conditional_decorator(jwt_required, USE_LOGIN)
 def get_image():
     """
     Main API endpoint. This takes in an URL and returns an image. 
@@ -129,28 +130,58 @@ def get_image():
 
     return "Image download error", 500
 
+
 @app.route("/login", methods=['POST'])
 def login():
     """
-    Login the user
+    Login the user using flask_jwt_extented. Accepts json as input and returns an access token. 
+    The configuration can be set via environment variables: 
+    - JWT_SECRET_KEY: The secret key for JWT
+    - JWT_USER: The username of the JWT login. Default: user
+    - JWT_PASSWORD: The password for the JWT login. Default: url2image
+    - USE_LOGIN: Enables/Disables the requirement for login via JWT. Default: True
+    - JWT_ACCESS_TOKEN_EXPIRES: The expiration time (in seconds) of `False` for no expiration of the JWT. Default: False 
+
+    A basic login can be achieved via:: 
+
+        curl -H "Content-Type: application/json" -X POST -d '{"username":"user", "password":"url2image" }' "http://localhost:5000/login"
+        {
+            "access_token": "TOKEN"
+        }
+    
+    The authorization is then done in the header::
+
+        curl -H "Authorization: Bearer TOKEN" "http://localhost:5000/getImage?url=google.de"
+
+
+    Args:
+        username: The username to login
+        password: The users password
+
+    Returns: 
+        The generated access token.
+
+     
+
     """
     if not request.is_json:
         return jsonify({"msg": "Missing JSON in request"}), 400
-    
+
     username = request.json.get('username', None)
     password = request.json.get('password', None)
 
     if not username:
-        return jsonify({"msg": "Missing username parameter"}) , 400
+        return jsonify({"msg": "Missing username parameter"}), 400
 
     if not password:
-        return jsonify({"msg": "Missing password parameter"}) , 400
+        return jsonify({"msg": "Missing password parameter"}), 400
 
     if username != JWT_USER or password != JWT_PASSWORD:
-        return jsonify({"msg": "Bad username or password"}) , 401
-    
+        return jsonify({"msg": "Bad username or password"}), 401
+
     access_token = create_access_token(identity=username)
     return jsonify(access_token=access_token), 200
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
