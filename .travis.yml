@@ -17,7 +17,7 @@ before_install:
 
 script: 
   - python -m pytest tests --doctest-modules  -v --cov coveralls --cov-report term-missing
-  - curl localhost:5000
+  #- curl localhost:5000
 
 after_success:
   - coveralls
