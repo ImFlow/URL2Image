@@ -187,7 +187,7 @@ def login():
     The authorization is then done in the header::
 
         curl -H "Authorization: Bearer TOKEN" "http://localhost:5000/getImage?url=google.de"
-    
+
     Args:
 
         username: The username to login
