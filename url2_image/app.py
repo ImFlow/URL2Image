@@ -12,7 +12,7 @@ from flask import Flask, request, jsonify, send_file
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
-from env import JWT_SECRET_KEY, JWT_USER, JWT_PASSWORD, FLASK_DEBUG, USE_LOGIN
+from url2_image_env import JWT_SECRET_KEY, JWT_USER, JWT_PASSWORD, FLASK_DEBUG, USE_LOGIN, JWT_ACCESS_TOKEN_EXPIRES
 from login_util import conditional_decorator
 
 # pylint: disable=invalid-name
@@ -148,7 +148,7 @@ def login():
         {
             "access_token": "TOKEN"
         }
-    
+
     The authorization is then done in the header::
 
         curl -H "Authorization: Bearer TOKEN" "http://localhost:5000/getImage?url=google.de"
@@ -160,9 +160,6 @@ def login():
 
     Returns: 
         The generated access token.
-
-     
-
     """
     if not request.is_json:
         return jsonify({"msg": "Missing JSON in request"}), 400

@@ -5,6 +5,9 @@ Since we are not using any DBs the setup is rather simple and (maybe) can omitte
 
 import pytest
 
+import sys, os
+myPath = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, myPath + '/../url2_image/')
 from url2_image.app import app, limiter
 
 
