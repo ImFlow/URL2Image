@@ -131,22 +131,22 @@ def get_image():
     browser.quit()
 
     req_format = "png"
-    if request.args.get('format') is not None: 
-        #never trust user input
+    if request.args.get('format') is not None:
+        # never trust user input
         wanted_format = request.args.get('format')
-        if 'jpg' in wanted_format: 
+        if 'jpg' in wanted_format:
             req_format = "jpg"
 
     req_quality = 60
     if request.args.get('quality') is not None:
         req_quality = int(request.args.get('quality'))
-    
 
-    if req_format == "jpg": 
+    if req_format == "jpg":
         im = Image.open(destination)
         rgb_im = im.convert('RGB')
         destination = "/tmp_images/" + fname + ".jpg"
-        rgb_im.save(destination, quality=req_quality, optimize=True, progressive=True)
+        rgb_im.save(destination, quality=req_quality,
+                    optimize=True, progressive=True)
         with open(destination, "rb") as f:
             return send_file(io.BytesIO(f.read()), attachment_filename="url.jpg", mimetype="image/jpg")
 

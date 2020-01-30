@@ -33,15 +33,18 @@ def test_get_image(client):
     assert result.status_code == 200
     assert "image" in result.headers.get('Content-Type')
 
+
 def test_get_image_jpg(client):
     header = log_me_in(client)
     result = client.get("/getImage?url=google.de&format=jpg", headers=header)
     assert result.status_code == 200
     assert "image" in result.headers.get('Content-Type')
 
+
 def test_get_image_jpg_quality(client):
     header = log_me_in(client)
-    result = client.get("/getImage?url=google.de&format=jpg&quality=50", headers=header)
+    result = client.get(
+        "/getImage?url=google.de&format=jpg&quality=50", headers=header)
     assert result.status_code == 200
     assert "image" in result.headers.get('Content-Type')
 
