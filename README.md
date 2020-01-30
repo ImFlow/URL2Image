@@ -42,6 +42,25 @@ Supported options are `url` to specify the url of the target. This is required. 
 curl "localhost:5000/getImage?url=google.de&width=400&height=400" -o test.png
 ```
 
+A basic login can be achieved via:
+
+```bash
+curl -H "Content-Type: application/json" -X POST -d '{"username":"user", "password":"url2image" }' "http://localhost:5000/login"
+{
+    "access_token": "TOKEN"
+}
+```
+
+The authorization is then done in the header::
+
+```bash
+curl -H "Authorization: Bearer TOKEN" "http://localhost:5000/getImage?url=google.de"
+```
+
+## Documentation
+
+More documentation can be found [here](https://url2image.readthedocs.io/en/master/)
+
 ## TODO
 :white_check_mark: Design API
 
@@ -55,4 +74,4 @@ curl "localhost:5000/getImage?url=google.de&width=400&height=400" -o test.png
 
 :white_check_mark: Configs
 
-- [ ] Image format selection (jpg/png/heif?)
+:white_check_mark: Image format selection (jpg/png)
