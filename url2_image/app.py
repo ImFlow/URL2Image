@@ -136,10 +136,15 @@ def login():
     """
     Login the user using flask_jwt_extented. Accepts json as input and returns an access token. 
     The configuration can be set via environment variables: 
+
     - JWT_SECRET_KEY: The secret key for JWT
+
     - JWT_USER: The username of the JWT login. Default: user
+
     - JWT_PASSWORD: The password for the JWT login. Default: url2image
+
     - USE_LOGIN: Enables/Disables the requirement for login via JWT. Default: True
+    
     - JWT_ACCESS_TOKEN_EXPIRES: The expiration time (in seconds) of `False` for no expiration of the JWT. Default: False 
 
     A basic login can be achieved via:: 
@@ -155,7 +160,9 @@ def login():
 
 
     Args:
+
         username: The username to login
+
         password: The users password
 
     Returns: 

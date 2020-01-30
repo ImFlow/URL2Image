@@ -49,7 +49,10 @@ curl "localhost:5000/getImage?url=google.de&width=400&height=400" -o test.png
 
 :white_check_mark: DDos protection
 
-- [ ] JWT authentification
-- [ ] Username/Password authentification?
-- [ ] Configs
+:white_check_mark: JWT authentification
+
+:white_check_mark: Username/Password authentification
+
+:white_check_mark: Configs
+
 - [ ] Image format selection (jpg/png/heif?)
