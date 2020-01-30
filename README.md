@@ -64,14 +64,16 @@ More documentation can be found [here](https://url2image.readthedocs.io/en/maste
 ## Configuration
 
 The service can be configured using environtment variables:
+
 | Variable | Description | Default Value |
 |----------|-------------|---------------|
-| JWT_SECRET_KEY | Secret key for the JWT access tokens|    |
+| JWT_SECRET_KEY | Secret key for the JWT access tokens| Random String   |
 | JWT_USER | The username for the JWT authentification |"user"|
 | JWT_PASSWORD | The password for the JWT authentification | "url2image" |
 | FLASK_DEBUG | Run in debug mode. Currently only *disables* the DDos protection| not set |
 | USE_LOGIN | Enables the authorization requirement for the service | True |
 | JWT_ACCESS_TOKEN_EXPIRES | Expiration time of the JWT in seconds or False for no expiration | False |
+
 
 ## TODO
 :white_check_mark: Design API
