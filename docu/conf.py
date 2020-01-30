@@ -13,7 +13,8 @@
 import os
 import sys
 sys.path.insert(0, '..')
-
+myPath = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, myPath + '/../url2_image/')
 
 # -- Project information -----------------------------------------------------
 
