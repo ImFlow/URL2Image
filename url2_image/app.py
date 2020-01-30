@@ -11,9 +11,14 @@ from xvfbwrapper import Xvfb
 from flask import Flask, request, jsonify, send_file
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
+from env import JWT_SECRET_KEY, JWT_USER, JWT_PASSWORD, FLASK_DEBUG, USE_LOGIN
+from login_util import conditional_decorator
 
 # pylint: disable=invalid-name
 app = Flask(__name__)
+app.config['JWT_SECRET_KEY'] = JWT_SECRET_KEY
+jwt = JWTManager(app)
 
 VERSION = "v0.1"
 
@@ -24,11 +29,12 @@ limiter = Limiter(
     default_limits=["2 per minute", "1 per second"],
 )
 
-if os.environ.get("FLASK_DEBUG") is not None:
+if FLASK_DEBUG:
     limiter.enabled = False
 
 
 @app.route("/")
+@conditional_decorator(jwt_required, USE_LOGIN)
 def hello():
     """
     Return "Hello World" as a default for the "/" route
@@ -37,6 +43,7 @@ def hello():
 
 
 @app.route("/version")
+@conditional_decorator(jwt_required, USE_LOGIN) 
 def get_version():
     """
     API endpoint to retrieve version information of the service.
@@ -76,6 +83,7 @@ def get_version():
 
 
 @app.route("/getImage")
+@conditional_decorator(jwt_required, USE_LOGIN) 
 def get_image():
     """
     Main API endpoint. This takes in an URL and returns an image. 
@@ -121,6 +129,28 @@ def get_image():
 
     return "Image download error", 500
 
+@app.route("/login", methods=['POST'])
+def login():
+    """
+    Login the user
+    """
+    if not request.is_json:
+        return jsonify({"msg": "Missing JSON in request"}), 400
+    
+    username = request.json.get('username', None)
+    password = request.json.get('password', None)
+
+    if not username:
+        return jsonify({"msg": "Missing username parameter"}) , 400
+
+    if not password:
+        return jsonify({"msg": "Missing password parameter"}) , 400
+
+    if username != JWT_USER or password != JWT_PASSWORD:
+        return jsonify({"msg": "Bad username or password"}) , 401
+    
+    access_token = create_access_token(identity=username)
+    return jsonify(access_token=access_token), 200
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
