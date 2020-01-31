@@ -36,6 +36,7 @@ limiter = Limiter(
 if FLASK_DEBUG:
     limiter.enabled = False
 
+print(f"USE_LOGIN: {USE_LOGIN}")
 
 @app.route("/")
 @conditional_decorator(jwt_required, USE_LOGIN)
