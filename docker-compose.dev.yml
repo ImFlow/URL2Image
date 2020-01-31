@@ -11,4 +11,3 @@ services:
     entrypoint: "python /app/url2_image/app.py"
     environment:
       FLASK_DEBUG: 1
-      USE_LOGIN: 0

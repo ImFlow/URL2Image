@@ -38,6 +38,7 @@ if FLASK_DEBUG:
 
 print(f"USE_LOGIN: {USE_LOGIN}")
 
+
 @app.route("/")
 @conditional_decorator(jwt_required, USE_LOGIN)
 def hello():
