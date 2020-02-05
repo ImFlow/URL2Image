@@ -4,7 +4,7 @@
 [![Documentation Status](https://readthedocs.org/projects/url2image/badge/?version=master)](https://url2image.readthedocs.io/en/master/?badge=master)
 
 # URL2Image
-A microservice that turns an URL into an image.
+A microservice that turns an URL into an image aka it takes a screenshot of the website.
 
 ## What it is
 URL2Image provides an API, which accepts a URL and returns a rendered image of the URL.
